@@ -1930,19 +1930,24 @@ class Translator:
 			var cls_pref : String = ""
 			cls_pref += tabulate("class " + class_table[class_index].name + ":\n", nesting)
 			nesting += 1
-			cls_pref += tabulate("func _init():\n", nesting)
+			var constructor_text : String = ""
+			var has_constructor : bool = false
+			constructor_text += tabulate("func _init():\n", nesting)
 			text += cls_pref
 			nesting += 1
-			text += tabulate("var service\n", nesting)
-			text += tabulate("\n", nesting)
+			constructor_text += tabulate("var service\n", nesting)
+			constructor_text += tabulate("\n", nesting)
 			var field_text : String = ""
 			for i in range(field_table.size()):
 				if field_table[i].parent_class_id == class_index:
-					text += generate_field_constructor(i, nesting)
-					text += tabulate("\n", nesting)
+					has_constructor = true
+					constructor_text += generate_field_constructor(i, nesting)
+					constructor_text += tabulate("\n", nesting)
 					field_text += generate_field(i, nesting - 1)
 					field_text += tabulate("\n", nesting - 1)
 			nesting -= 1
+			if has_constructor:
+				text += constructor_text
 			text += tabulate("var data = {}\n", nesting)
 			text += tabulate("\n", nesting)
 			text += field_text

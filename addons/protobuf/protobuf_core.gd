@@ -144,17 +144,23 @@ class PBField:
 	var tag : int
 	var option_packed : bool
 	var value
-	var option_default : bool = false
 
 class PBTypeTag:
+# warning-ignore:unused_class_variable
 	var ok : bool = false
+# warning-ignore:unused_class_variable
 	var type : int
+# warning-ignore:unused_class_variable
 	var tag : int
+# warning-ignore:unused_class_variable
 	var offset : int
 
 class PBServiceField:
+# warning-ignore:unused_class_variable
 	var field : PBField
+# warning-ignore:unused_class_variable
 	var func_ref = null
+# warning-ignore:unused_class_variable
 	var state : int = PB_SERVICE_STATE.UNFILLED
 
 class PBPacker:

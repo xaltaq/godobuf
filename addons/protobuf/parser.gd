@@ -1930,7 +1930,8 @@ class Translator:
 			var cls_pref : String = ""
 			cls_pref += tabulate("class " + class_table[class_index].name + ":\n", nesting)
 			nesting += 1
-			cls_pref += tabulate("func _init():\n", nesting)
+			cls_pref += tabulate("extends Reference\n", nesting)
+			cls_pref += tabulate("\n", nesting)
 			text += cls_pref
 			nesting += 1
 			text += tabulate("var service\n", nesting)

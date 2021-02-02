@@ -2007,7 +2007,7 @@ class Translator:
 		text += tabulate("return result\n", nesting)
 		return text
 	
-	func translate(file_name : String, core_file_name : String) -> bool:
+	func translate(file_name : String, core_file_name : String, global_class_name: String) -> bool:
 		var file : File = File.new()
 		if file.open(file_name, File.WRITE) < 0:
 			printerr("File: '", file_name, "' save error.")
@@ -2023,6 +2023,8 @@ class Translator:
 		core_file.close()
 		var text : String = ""
 		var nesting : int = 0
+		if global_class_name:
+			text += "class_name " + global_class_name + "\n"
 		text += "const PROTO_VERSION = " + String(proto_version) + "\n\n"
 		text += core_text + "\n\n\n"
 		text += "############### USER DATA BEGIN ################\n"
@@ -2142,7 +2144,7 @@ func semantic_all(analyzes : Dictionary, imports : Array)-> bool:
 			return false
 	return true
 	
-func translate_all(analyzes : Dictionary, file_name : String, core_file_name : String) -> bool:
+func translate_all(analyzes : Dictionary, file_name : String, core_file_name : String, global_class_name : String) -> bool:
 	var first_key : String = analyzes.keys()[0]
 	var analyze : AnalyzeResult = analyzes[first_key]
 	var keys : Array = []
@@ -2154,12 +2156,12 @@ func translate_all(analyzes : Dictionary, file_name : String, core_file_name : S
 		return false
 	print("Perform translation.")
 	var translator : Translator = Translator.new(analyze)
-	if !translator.translate(file_name, core_file_name):
+	if !translator.translate(file_name, core_file_name, global_class_name):
 		return false
 	var first : bool = true
 	return true
 
-func work(path : String, in_file : String, out_file : String, core_file : String) -> bool:
+func work(path : String, in_file : String, out_file : String, core_file : String, global_class_name : String) -> bool:
 	var in_full_name : String = path + in_file
 	var imports : Array = []
 	var analyzes : Dictionary = {}
@@ -2176,7 +2178,7 @@ func work(path : String, in_file : String, out_file : String, core_file : String
 	else:
 		return false
 	print("\n3. Output file creating:")
-	if translate_all(analyzes, out_file, core_file):
+	if translate_all(analyzes, out_file, core_file, global_class_name):
 		print("* Output file was created successfully. *")
 	else:
 		return false
@@ -2187,4 +2189,5 @@ func _ready():
 	var in_file : String = "A.proto"
 	var out_file : String = "res://out.gd"
 	var core_file : String = "res://protobuf_core.gd"
-	work(path, in_file, out_file, core_file)
+	var global_class_name : String = ""
+	work(path, in_file, out_file, core_file, global_class_name)

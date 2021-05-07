@@ -131,6 +131,8 @@ enum PB_SERVICE_STATE {
 }
 
 class PBField:
+	extends Reference
+
 	func _init(a_name : String, a_type : int, a_rule : int, a_tag : int, packed : bool, a_value = null):
 		name = a_name
 		type = a_type
@@ -147,12 +149,15 @@ class PBField:
 	var option_default : bool = false
 
 class PBTypeTag:
+	extends Reference
+
 	var ok : bool = false
 	var type : int
 	var tag : int
 	var offset : int
 
 class PBServiceField:
+	extends Reference
 	var field : PBField
 	var func_ref = null
 	var state : int = PB_SERVICE_STATE.UNFILLED

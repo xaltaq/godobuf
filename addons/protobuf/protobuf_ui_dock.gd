@@ -57,7 +57,7 @@ func _on_InputFileDialog_file_selected(path):
 #	output_file_name = input_file_name.left(input_file_name.length() - ext.length()) + "gd"
 ##
 #	$HBoxContainer2/OutputFileEdit.text = output_file_name
-#	$HBoxContainer2/OutputFileDialog.set_current_dir(_exstract_dir(output_file_name))
+#	$HBoxContainer2/OutputFileDialog.set_current_dir(_extract_dir(output_file_name))
 
 func _on_OutputFileDialog_file_selected(path):
 	output_file_name = path
@@ -90,15 +90,16 @@ func _on_CompileButton_pressed():
 	
 	var parser = Parser.new()
 	
-	if parser.work(_exstract_dir(input_file_name), _extract_filename(input_file_name), \
-		output_file_name, "res://addons/protobuf/protobuf_core.gd"):
+
+	if parser.work(_extract_dir(input_file_name), _extract_filename(input_file_name), \
+		output_file_name, "res://addons/protobuf/protobuf_core.gd", $GlobalClassNameEdit.text):
 		show_dialog($SuccessAcceptDialog)
 	else:
 		show_dialog($FailAcceptDialog)
 	
 	return
 
-func _exstract_dir(file_path):
+func _extract_dir(file_path):
 	var parts = file_path.split("/", false)
 	parts.remove(parts.size() - 1)
 	var path

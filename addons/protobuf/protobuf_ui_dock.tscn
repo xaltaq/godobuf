@@ -55,10 +55,24 @@ margin_right = 178.0
 margin_bottom = 24.0
 text = "..."
 
-[node name="Control" type="Control" parent="."]
+[node name="GlobalClassNameLabel" type="Label" parent="."]
 margin_top = 92.0
 margin_right = 293.0
-margin_bottom = 92.0
+margin_bottom = 106.0
+text = "Global class name (optional):"
+
+[node name="GlobalClassNameEdit" type="LineEdit" parent="."]
+margin_top = 110.0
+margin_right = 178.0
+margin_bottom = 24.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+margin_top = 138.0
+margin_right = 293.0
+margin_bottom = 138.0
 
 [node name="CompileButton" type="Button" parent="Control"]
 margin_top = 15.0
